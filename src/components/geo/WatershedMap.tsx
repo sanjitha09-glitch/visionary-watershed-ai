@@ -97,9 +97,9 @@ export function WatershedMap({
     let cancelled = false;
     let map: MLMap | undefined;
     (async () => {
-      const maplibregl = (await import("maplibre-gl")).default;
+      const maplibregl = await import("maplibre-gl");
       if (cancelled || !containerRef.current) return;
-      map = new maplibregl.Map({
+      const m0 = new maplibregl.Map({
         container: containerRef.current,
         center: [78.9, 19.5],
         zoom: 4.3,
@@ -116,12 +116,13 @@ export function WatershedMap({
           ],
         },
       });
-      map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), "top-right");
-      map.addControl(new maplibregl.FullscreenControl(), "top-right");
-      map.addControl(new maplibregl.GeolocateControl({ positionOptions: { enableHighAccuracy: true } }), "top-right");
-      map.addControl(new maplibregl.ScaleControl({ unit: "metric" }), "bottom-left");
+      map = m0;
+      m0.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), "top-right");
+      m0.addControl(new maplibregl.FullscreenControl(), "top-right");
+      m0.addControl(new maplibregl.GeolocateControl({ positionOptions: { enableHighAccuracy: true } }), "top-right");
+      m0.addControl(new maplibregl.ScaleControl({ unit: "metric" }), "bottom-left");
 
-      map.on("load", () => {
+      m0.on("load", () => {
         const teal = readVar("var(--sidebar-primary)");
         const warn = readVar("var(--warning)");
         map!.addSource("watersheds", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
@@ -141,14 +142,14 @@ export function WatershedMap({
 
         map!.on("click", "iv-circle", (e) => {
           if (measuringRef.current) return;
-          const id = e.features?.[0]?.properties?.id as string;
+          const id = e.features?.[0]?.properties?.["id"] as string;
           setSelected(intvRef.current.find((i) => i.id === id) ?? null);
         });
         map!.on("click", "ws-fill", (e) => {
           if (measuringRef.current) return;
           const hitIv = map!.queryRenderedFeatures(e.point, { layers: ["iv-circle"] });
           if (hitIv.length) return;
-          const id = e.features?.[0]?.properties?.id as string;
+          const id = e.features?.[0]?.properties?.["id"] as string;
           if (id) selectWsRef.current?.(id);
         });
         map!.on("click", (e) => {
@@ -181,10 +182,10 @@ export function WatershedMap({
   useEffect(() => {
     if (!ready || !watersheds.length) return;
     const target = selectedWatershedId ? watersheds.filter((w) => w.id === selectedWatershedId) : watersheds;
-    const coords = target.flatMap((w) => w.boundary.coordinates[0]);
+    const coords = target.flatMap((w) => w.boundary.coordinates[0] ?? []);
     if (!coords.length) return;
-    const lngs = coords.map((c) => c[0]);
-    const lats = coords.map((c) => c[1]);
+    const lngs = coords.map((c) => c[0]!);
+    const lats = coords.map((c) => c[1]!);
     mapRef.current!.fitBounds([[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]], { padding: 60, maxZoom: 12.5, duration: 900 });
   }, [ready, watersheds, selectedWatershedId]);
 
@@ -196,9 +197,9 @@ export function WatershedMap({
   useEffect(() => {
     if (!ready) return;
     const m = mapRef.current!;
-    m.setLayoutProperty("satellite", "visibility", visible.satellite ? "visible" : "none");
-    ["ws-fill", "ws-line"].forEach((l) => m.setLayoutProperty(l, "visibility", visible.boundary ? "visible" : "none"));
-    m.setLayoutProperty("iv-circle", "visibility", visible.interventions ? "visible" : "none");
+    m.setLayoutProperty("satellite", "visibility", visible["satellite"] ? "visible" : "none");
+    ["ws-fill", "ws-line"].forEach((l) => m.setLayoutProperty(l, "visibility", visible["boundary"] ? "visible" : "none"));
+    m.setLayoutProperty("iv-circle", "visibility", visible["interventions"] ? "visible" : "none");
   }, [ready, visible]);
 
   // Measurement rendering
@@ -209,7 +210,7 @@ export function WatershedMap({
     (mapRef.current!.getSource("measure") as GeoJSONSource).setData({ type: "FeatureCollection", features } as never);
   }, [ready, measurePts]);
 
-  const distance = measurePts.reduce((acc, p, i) => (i ? acc + haversineKm(measurePts[i - 1], p) : 0), 0);
+  const distance = measurePts.reduce((acc, p, i) => (i ? acc + haversineKm(measurePts[i - 1]!, p) : 0), 0);
 
   return (
     <div className={cn("relative overflow-hidden rounded-lg border bg-muted", className)}>
