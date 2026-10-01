@@ -10,12 +10,31 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthenticatedAuditRouteImport } from './routes/_authenticated/audit'
+import { Route as AuthenticatedChangeDetectionRouteImport } from './routes/_authenticated/change-detection'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedDataSourcesRouteImport } from './routes/_authenticated/data-sources'
+import { Route as AuthenticatedGeoImagesRouteImport } from './routes/_authenticated/geo-images'
+import { Route as AuthenticatedHealthRouteImport } from './routes/_authenticated/health'
+import { Route as AuthenticatedInsightsRouteImport } from './routes/_authenticated/insights'
+import { Route as AuthenticatedInterventionsRouteImport } from './routes/_authenticated/interventions'
+import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
+import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
+import { Route as AuthenticatedSatelliteRouteImport } from './routes/_authenticated/satellite'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedWatershedsIndexRouteImport } from './routes/_authenticated/watersheds/index'
+import { Route as AuthenticatedWatershedsWatershedIdRouteImport } from './routes/_authenticated/watersheds/$watershedId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -28,33 +47,206 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAuditRoute = AuthenticatedAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedChangeDetectionRoute =
+  AuthenticatedChangeDetectionRouteImport.update({
+    id: '/change-detection',
+    path: '/change-detection',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDataSourcesRoute =
+  AuthenticatedDataSourcesRouteImport.update({
+    id: '/data-sources',
+    path: '/data-sources',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedGeoImagesRoute = AuthenticatedGeoImagesRouteImport.update({
+  id: '/geo-images',
+  path: '/geo-images',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedHealthRoute = AuthenticatedHealthRouteImport.update({
+  id: '/health',
+  path: '/health',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedInsightsRoute = AuthenticatedInsightsRouteImport.update({
+  id: '/insights',
+  path: '/insights',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedInterventionsRoute =
+  AuthenticatedInterventionsRouteImport.update({
+    id: '/interventions',
+    path: '/interventions',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedNotificationsRoute =
+  AuthenticatedNotificationsRouteImport.update({
+    id: '/notifications',
+    path: '/notifications',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSatelliteRoute = AuthenticatedSatelliteRouteImport.update({
+  id: '/satellite',
+  path: '/satellite',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedWatershedsIndexRoute =
+  AuthenticatedWatershedsIndexRouteImport.update({
+    id: '/watersheds/',
+    path: '/watersheds/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedWatershedsWatershedIdRoute =
+  AuthenticatedWatershedsWatershedIdRouteImport.update({
+    id: '/watersheds/$watershedId',
+    path: '/watersheds/$watershedId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/audit': typeof AuthenticatedAuditRoute
+  '/change-detection': typeof AuthenticatedChangeDetectionRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/data-sources': typeof AuthenticatedDataSourcesRoute
+  '/geo-images': typeof AuthenticatedGeoImagesRoute
+  '/health': typeof AuthenticatedHealthRoute
+  '/insights': typeof AuthenticatedInsightsRoute
+  '/interventions': typeof AuthenticatedInterventionsRoute
+  '/notifications': typeof AuthenticatedNotificationsRoute
+  '/reports': typeof AuthenticatedReportsRoute
+  '/satellite': typeof AuthenticatedSatelliteRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/watersheds/$watershedId': typeof AuthenticatedWatershedsWatershedIdRoute
+  '/watersheds/': typeof AuthenticatedWatershedsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/audit': typeof AuthenticatedAuditRoute
+  '/change-detection': typeof AuthenticatedChangeDetectionRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/data-sources': typeof AuthenticatedDataSourcesRoute
+  '/geo-images': typeof AuthenticatedGeoImagesRoute
+  '/health': typeof AuthenticatedHealthRoute
+  '/insights': typeof AuthenticatedInsightsRoute
+  '/interventions': typeof AuthenticatedInterventionsRoute
+  '/notifications': typeof AuthenticatedNotificationsRoute
+  '/reports': typeof AuthenticatedReportsRoute
+  '/satellite': typeof AuthenticatedSatelliteRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/watersheds/$watershedId': typeof AuthenticatedWatershedsWatershedIdRoute
+  '/watersheds': typeof AuthenticatedWatershedsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/audit': typeof AuthenticatedAuditRoute
+  '/_authenticated/change-detection': typeof AuthenticatedChangeDetectionRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/data-sources': typeof AuthenticatedDataSourcesRoute
+  '/_authenticated/geo-images': typeof AuthenticatedGeoImagesRoute
+  '/_authenticated/health': typeof AuthenticatedHealthRoute
+  '/_authenticated/insights': typeof AuthenticatedInsightsRoute
+  '/_authenticated/interventions': typeof AuthenticatedInterventionsRoute
+  '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
+  '/_authenticated/reports': typeof AuthenticatedReportsRoute
+  '/_authenticated/satellite': typeof AuthenticatedSatelliteRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/watersheds/$watershedId': typeof AuthenticatedWatershedsWatershedIdRoute
+  '/_authenticated/watersheds/': typeof AuthenticatedWatershedsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/reset-password'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/reset-password'
+    | '/audit'
+    | '/change-detection'
+    | '/dashboard'
+    | '/data-sources'
+    | '/geo-images'
+    | '/health'
+    | '/insights'
+    | '/interventions'
+    | '/notifications'
+    | '/reports'
+    | '/satellite'
+    | '/settings'
+    | '/watersheds/$watershedId'
+    | '/watersheds/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/reset-password'
-  id: '__root__' | '/' | '/auth' | '/reset-password'
+  to:
+    | '/'
+    | '/auth'
+    | '/reset-password'
+    | '/audit'
+    | '/change-detection'
+    | '/dashboard'
+    | '/data-sources'
+    | '/geo-images'
+    | '/health'
+    | '/insights'
+    | '/interventions'
+    | '/notifications'
+    | '/reports'
+    | '/satellite'
+    | '/settings'
+    | '/watersheds/$watershedId'
+    | '/watersheds'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/reset-password'
+    | '/_authenticated/audit'
+    | '/_authenticated/change-detection'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/data-sources'
+    | '/_authenticated/geo-images'
+    | '/_authenticated/health'
+    | '/_authenticated/insights'
+    | '/_authenticated/interventions'
+    | '/_authenticated/notifications'
+    | '/_authenticated/reports'
+    | '/_authenticated/satellite'
+    | '/_authenticated/settings'
+    | '/_authenticated/watersheds/$watershedId'
+    | '/_authenticated/watersheds/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
 }
@@ -66,6 +258,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -82,11 +281,148 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/audit': {
+      id: '/_authenticated/audit'
+      path: '/audit'
+      fullPath: '/audit'
+      preLoaderRoute: typeof AuthenticatedAuditRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/change-detection': {
+      id: '/_authenticated/change-detection'
+      path: '/change-detection'
+      fullPath: '/change-detection'
+      preLoaderRoute: typeof AuthenticatedChangeDetectionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/data-sources': {
+      id: '/_authenticated/data-sources'
+      path: '/data-sources'
+      fullPath: '/data-sources'
+      preLoaderRoute: typeof AuthenticatedDataSourcesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/geo-images': {
+      id: '/_authenticated/geo-images'
+      path: '/geo-images'
+      fullPath: '/geo-images'
+      preLoaderRoute: typeof AuthenticatedGeoImagesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/health': {
+      id: '/_authenticated/health'
+      path: '/health'
+      fullPath: '/health'
+      preLoaderRoute: typeof AuthenticatedHealthRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/insights': {
+      id: '/_authenticated/insights'
+      path: '/insights'
+      fullPath: '/insights'
+      preLoaderRoute: typeof AuthenticatedInsightsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/interventions': {
+      id: '/_authenticated/interventions'
+      path: '/interventions'
+      fullPath: '/interventions'
+      preLoaderRoute: typeof AuthenticatedInterventionsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/notifications': {
+      id: '/_authenticated/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reports': {
+      id: '/_authenticated/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/satellite': {
+      id: '/_authenticated/satellite'
+      path: '/satellite'
+      fullPath: '/satellite'
+      preLoaderRoute: typeof AuthenticatedSatelliteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/watersheds/': {
+      id: '/_authenticated/watersheds/'
+      path: '/watersheds'
+      fullPath: '/watersheds/'
+      preLoaderRoute: typeof AuthenticatedWatershedsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/watersheds/$watershedId': {
+      id: '/_authenticated/watersheds/$watershedId'
+      path: '/watersheds/$watershedId'
+      fullPath: '/watersheds/$watershedId'
+      preLoaderRoute: typeof AuthenticatedWatershedsWatershedIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAuditRoute: typeof AuthenticatedAuditRoute
+  AuthenticatedChangeDetectionRoute: typeof AuthenticatedChangeDetectionRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDataSourcesRoute: typeof AuthenticatedDataSourcesRoute
+  AuthenticatedGeoImagesRoute: typeof AuthenticatedGeoImagesRoute
+  AuthenticatedHealthRoute: typeof AuthenticatedHealthRoute
+  AuthenticatedInsightsRoute: typeof AuthenticatedInsightsRoute
+  AuthenticatedInterventionsRoute: typeof AuthenticatedInterventionsRoute
+  AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
+  AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
+  AuthenticatedSatelliteRoute: typeof AuthenticatedSatelliteRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedWatershedsWatershedIdRoute: typeof AuthenticatedWatershedsWatershedIdRoute
+  AuthenticatedWatershedsIndexRoute: typeof AuthenticatedWatershedsIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAuditRoute: AuthenticatedAuditRoute,
+  AuthenticatedChangeDetectionRoute: AuthenticatedChangeDetectionRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDataSourcesRoute: AuthenticatedDataSourcesRoute,
+  AuthenticatedGeoImagesRoute: AuthenticatedGeoImagesRoute,
+  AuthenticatedHealthRoute: AuthenticatedHealthRoute,
+  AuthenticatedInsightsRoute: AuthenticatedInsightsRoute,
+  AuthenticatedInterventionsRoute: AuthenticatedInterventionsRoute,
+  AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
+  AuthenticatedReportsRoute: AuthenticatedReportsRoute,
+  AuthenticatedSatelliteRoute: AuthenticatedSatelliteRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedWatershedsWatershedIdRoute:
+    AuthenticatedWatershedsWatershedIdRoute,
+  AuthenticatedWatershedsIndexRoute: AuthenticatedWatershedsIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ResetPasswordRoute: ResetPasswordRoute,
 }
