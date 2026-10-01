@@ -14,16 +14,306 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      audit_logs: {
+        Row: {
+          action: string
+          created_at: string
+          details: Json | null
+          entity: string | null
+          id: string
+          status: string
+          user_email: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          details?: Json | null
+          entity?: string | null
+          id?: string
+          status?: string
+          user_email?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          details?: Json | null
+          entity?: string | null
+          id?: string
+          status?: string
+          user_email?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      blocks: {
+        Row: {
+          district_id: string
+          id: string
+          name: string
+        }
+        Insert: {
+          district_id: string
+          id: string
+          name: string
+        }
+        Update: {
+          district_id?: string
+          id?: string
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blocks_district_id_fkey"
+            columns: ["district_id"]
+            isOneToOne: false
+            referencedRelation: "districts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      districts: {
+        Row: {
+          id: string
+          name: string
+          state_id: string
+        }
+        Insert: {
+          id: string
+          name: string
+          state_id: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          state_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "districts_state_id_fkey"
+            columns: ["state_id"]
+            isOneToOne: false
+            referencedRelation: "states"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      interventions: {
+        Row: {
+          data_origin: string
+          evidence_count: number
+          id: string
+          implemented_on: string
+          lat: number
+          lng: number
+          status: Database["public"]["Enums"]["monitoring_status"]
+          type: Database["public"]["Enums"]["intervention_type"]
+          updated_at: string
+          village: string
+          watershed_id: string
+        }
+        Insert: {
+          data_origin?: string
+          evidence_count?: number
+          id: string
+          implemented_on: string
+          lat: number
+          lng: number
+          status?: Database["public"]["Enums"]["monitoring_status"]
+          type: Database["public"]["Enums"]["intervention_type"]
+          updated_at?: string
+          village: string
+          watershed_id: string
+        }
+        Update: {
+          data_origin?: string
+          evidence_count?: number
+          id?: string
+          implemented_on?: string
+          lat?: number
+          lng?: number
+          status?: Database["public"]["Enums"]["monitoring_status"]
+          type?: Database["public"]["Enums"]["intervention_type"]
+          updated_at?: string
+          village?: string
+          watershed_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "interventions_watershed_id_fkey"
+            columns: ["watershed_id"]
+            isOneToOne: false
+            referencedRelation: "watersheds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          assigned_geography: string | null
+          created_at: string
+          department: string | null
+          email: string | null
+          full_name: string | null
+          id: string
+          last_login_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          assigned_geography?: string | null
+          created_at?: string
+          department?: string | null
+          email?: string | null
+          full_name?: string | null
+          id: string
+          last_login_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          assigned_geography?: string | null
+          created_at?: string
+          department?: string | null
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          last_login_at?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      states: {
+        Row: {
+          center_lat: number
+          center_lng: number
+          id: string
+          name: string
+        }
+        Insert: {
+          center_lat: number
+          center_lng: number
+          id: string
+          name: string
+        }
+        Update: {
+          center_lat?: number
+          center_lng?: number
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      watersheds: {
+        Row: {
+          area_ha: number
+          block_id: string
+          boundary: Json
+          center_lat: number
+          center_lng: number
+          data_origin: string
+          data_status: string
+          drainage_km: number | null
+          id: string
+          name: string
+          source: string
+          updated_at: string
+          water_bodies: number | null
+        }
+        Insert: {
+          area_ha: number
+          block_id: string
+          boundary: Json
+          center_lat: number
+          center_lng: number
+          data_origin?: string
+          data_status?: string
+          drainage_km?: number | null
+          id: string
+          name: string
+          source?: string
+          updated_at?: string
+          water_bodies?: number | null
+        }
+        Update: {
+          area_ha?: number
+          block_id?: string
+          boundary?: Json
+          center_lat?: number
+          center_lng?: number
+          data_origin?: string
+          data_status?: string
+          drainage_km?: number | null
+          id?: string
+          name?: string
+          source?: string
+          updated_at?: string
+          water_bodies?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "watersheds_block_id_fkey"
+            columns: ["block_id"]
+            isOneToOne: false
+            referencedRelation: "blocks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_admin: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role:
+        | "super_admin"
+        | "state_admin"
+        | "district_officer"
+        | "watershed_officer"
+        | "field_monitor"
+        | "analyst"
+        | "viewer"
+      intervention_type:
+        | "check_dam"
+        | "farm_pond"
+        | "plantation"
+        | "water_conservation"
+        | "land_treatment"
+        | "drainage_treatment"
+        | "other"
+      monitoring_status:
+        | "monitored"
+        | "requires_review"
+        | "data_incomplete"
+        | "analysis_available"
+        | "pending_validation"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +440,32 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: [
+        "super_admin",
+        "state_admin",
+        "district_officer",
+        "watershed_officer",
+        "field_monitor",
+        "analyst",
+        "viewer",
+      ],
+      intervention_type: [
+        "check_dam",
+        "farm_pond",
+        "plantation",
+        "water_conservation",
+        "land_treatment",
+        "drainage_treatment",
+        "other",
+      ],
+      monitoring_status: [
+        "monitored",
+        "requires_review",
+        "data_incomplete",
+        "analysis_available",
+        "pending_validation",
+      ],
+    },
   },
 } as const
