@@ -7,7 +7,7 @@ export async function logAudit(action: string, entity?: string, details?: Record
     if (!data.user) return;
     await supabase.from("audit_logs").insert({
       user_id: data.user.id,
-      user_email: data.user.email,
+      user_email: data.user.email ?? null,
       action,
       entity: entity ?? null,
       status,

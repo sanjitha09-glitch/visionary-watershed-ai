@@ -100,7 +100,7 @@ export const blocksQuery = (districtId?: string) =>
     staleTime: Infinity,
   });
 
-export type GeoScope = { stateId?: string; districtId?: string; blockId?: string; watershedId?: string };
+export type GeoScope = { stateId?: string | undefined; districtId?: string | undefined; blockId?: string | undefined; watershedId?: string | undefined };
 
 /** Watersheds visible for a geographic scope. Prefix-matching on hierarchical IDs keeps the query index-friendly. */
 export const watershedsQuery = (scope: GeoScope) =>
