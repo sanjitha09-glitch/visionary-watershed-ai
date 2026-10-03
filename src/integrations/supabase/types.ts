@@ -99,6 +99,81 @@ export type Database = {
           },
         ]
       }
+      field_images: {
+        Row: {
+          captured_at: string | null
+          created_at: string
+          device: string | null
+          file_name: string
+          id: string
+          intervention_id: string | null
+          lat: number | null
+          lng: number | null
+          location_source: string
+          mime_type: string
+          object_key: string
+          observation: string | null
+          sha256: string
+          size_bytes: number
+          sync_status: string
+          uploaded_by: string
+          watershed_id: string | null
+        }
+        Insert: {
+          captured_at?: string | null
+          created_at?: string
+          device?: string | null
+          file_name: string
+          id?: string
+          intervention_id?: string | null
+          lat?: number | null
+          lng?: number | null
+          location_source?: string
+          mime_type: string
+          object_key: string
+          observation?: string | null
+          sha256: string
+          size_bytes: number
+          sync_status?: string
+          uploaded_by: string
+          watershed_id?: string | null
+        }
+        Update: {
+          captured_at?: string | null
+          created_at?: string
+          device?: string | null
+          file_name?: string
+          id?: string
+          intervention_id?: string | null
+          lat?: number | null
+          lng?: number | null
+          location_source?: string
+          mime_type?: string
+          object_key?: string
+          observation?: string | null
+          sha256?: string
+          size_bytes?: number
+          sync_status?: string
+          uploaded_by?: string
+          watershed_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "field_images_intervention_id_fkey"
+            columns: ["intervention_id"]
+            isOneToOne: false
+            referencedRelation: "interventions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "field_images_watershed_id_fkey"
+            columns: ["watershed_id"]
+            isOneToOne: false
+            referencedRelation: "watersheds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       interventions: {
         Row: {
           data_origin: string
