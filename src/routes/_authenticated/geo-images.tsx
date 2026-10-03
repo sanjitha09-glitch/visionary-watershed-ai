@@ -22,7 +22,7 @@ export const Route = createFileRoute("/_authenticated/geo-images")({
 const MAX = 15 * 1024 * 1024;
 const TYPES = ["image/jpeg", "image/png"];
 
-type Meta = { lat?: number; lng?: number; capturedAt?: string; device?: string };
+type Meta = { lat?: number | undefined; lng?: number | undefined; capturedAt?: string | undefined; device?: string | undefined };
 
 function inPolygon(lng: number, lat: number, ring: number[][]) {
   let inside = false;
@@ -64,9 +64,9 @@ function GeoImages() {
     },
   });
 
-  const onFile = useCallback(async (f: File) => {
-    if (!TYPES.includes(f.type)) return toast.error("Only JPG, JPEG or PNG images are accepted.");
-    if (f.size > MAX) return toast.error("Image exceeds the 15 MB limit.");
+  const onFile = useCallback(async (f: File): Promise<void> => {
+    if (!TYPES.includes(f.type)) { toast.error("Only JPG, JPEG or PNG images are accepted."); return; }
+    if (f.size > MAX) { toast.error("Image exceeds the 15 MB limit."); return; }
     setFile(f); setPreview(URL.createObjectURL(f)); setManual({ lat: "", lng: "" });
     try {
       const e = await exifr.parse(f, { gps: true, pick: ["DateTimeOriginal", "CreateDate", "Make", "Model", "latitude", "longitude"] });
@@ -114,7 +114,7 @@ function GeoImages() {
         observation: observation.trim().slice(0, 1000) || null,
       });
       if (error) throw error;
-      await logAudit("Image upload", "field_image", key);
+      await logAudit("Image upload", "field_image", { object_key: key });
       toast.success("Field evidence saved.");
       setFile(null); setPreview(undefined); setMeta(null); setObservation("");
       qc.invalidateQueries({ queryKey: ["field-images"] });

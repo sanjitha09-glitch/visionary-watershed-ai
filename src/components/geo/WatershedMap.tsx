@@ -57,9 +57,9 @@ export function WatershedMap({
 }: {
   watersheds: Watershed[];
   interventions: Intervention[];
-  selectedWatershedId?: string;
-  onSelectWatershed?: (id: string) => void;
-  focusPoint?: { lat: number; lng: number };
+  selectedWatershedId?: string | undefined;
+  onSelectWatershed?: ((id: string) => void) | undefined;
+  focusPoint?: { lat: number; lng: number } | undefined;
   className?: string;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);

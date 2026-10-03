@@ -62,10 +62,10 @@ function AuthPage() {
     setError(null);
     setNotice(null);
     const em = emailSchema.safeParse(email);
-    if (!em.success) return setError(em.error.issues[0].message);
+    if (!em.success) return setError(em.error.issues[0]?.message ?? "Invalid email");
     if (mode !== "forgot") {
       const pw = passwordSchema.safeParse(password);
-      if (!pw.success) return setError(pw.error.issues[0].message);
+      if (!pw.success) return setError(pw.error.issues[0]?.message ?? "Invalid password");
     }
     if (mode === "signup" && fullName.trim().length < 2) return setError("Enter your full name");
 
