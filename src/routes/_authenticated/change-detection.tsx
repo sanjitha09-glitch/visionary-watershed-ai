@@ -145,7 +145,7 @@ function EvidenceList({ title, images, signed }: { title: string; images: FieldI
 }
 
 function ChangeDetection() {
-  const { scope } = useGeoScope();
+  const scope = useGeoScope();
   const wsId = scope.watershedId;
   const ws = useQuery({ ...watershedQuery(wsId ?? ""), enabled: !!wsId });
   const adapters = useQuery({ queryKey: ["satellite-adapters"], queryFn: () => getSatelliteAdapters() });
